@@ -1,7 +1,10 @@
 const express = require("express");
 const app = express();
 const mongoose = require("mongoose");
+const Listing = require("./models/listing.js") // to connect any file or folder we must require the things first 
 
+
+//Connection code
 const MONGO_URL = "mongodb://127.0.0.1:27017/wanderlust";
 
 main()
@@ -25,7 +28,22 @@ app.get("/",(req,res) =>{
     res.send("Hi , I am Root");
 })
 
-app.listen(8080,() => {
-    console.log("server is listening on port 8080");
-});
+// Test Listing
+// app.get("/testListing",async (req,res)=>{
+//     let sampleListing = new Listing ({
+//         title: "My new villa",
+//         description: "By the Beach",
+//         price: 2000,
+//         location: "Goa",
+//         country: "India",
+//     });
+
+//   await sampleListing.save();
+//   console.log("sample was saved");
+//   res.send("successful testing");
+// });
+
+// app.listen(8080,() => {
+//     console.log("server is listening on port 8080");
+// });
 
