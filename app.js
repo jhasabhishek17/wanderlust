@@ -2,7 +2,8 @@ const express = require("express");
 const app = express();
 const mongoose = require("mongoose");
 const Listing = require("./models/listing.js") // to connect any file or folder we must require the things first 
-
+const path = require("path");
+const methodOverride = require("method-override");
 
 //Connection code
 const MONGO_URL = "mongodb://127.0.0.1:27017/wanderlust";
@@ -20,13 +21,69 @@ async function main() {
     
 }
 
+app.set("view engine","ejs");
+app.set("views",path.join(__dirname,"views"));
+app.use(express.urlencoded({extended: true}));
+app.use(methodOverride("_method"));
 
 
 //BASIC APIs
 
 app.get("/",(req,res) =>{
     res.send("Hi , I am Root");
+});
+
+//Below code is to get the listing file (Index Route)
+app.get("/listings", async (req,res)=>{
+   const allListings = await  Listing.find({});
+   res.render("listings/index.ejs",{allListings});
+});
+
+//New Route
+app.get("/listings/new",(req,res) =>{
+    res.render("listings/new.ejs");
+});
+
+//Show Route
+app.get("/listings/:id",async (req,res) =>{
+    let {id} = req.params;
+    const listing = await Listing.findById(id);
+    res.render("listings/show.ejs",{listing});
+
+});
+
+
+//Create Route
+app.post("/listings",async (req,res) =>{
+   const newListing = new Listing(req.body.listing);
+   await newListing.save();
+   res.redirect("/listings");
+});
+
+//Edit Route
+app.get("/listings/:id/edit",async (req,res) =>{
+    let {id} = req.params;
+    const listing = await Listing.findById(id);
+    res.render("listings/edit.ejs",{listing});
+
+});
+
+//Update Route
+app.put("/listings/:id",async(req,res) =>{
+   let {id} = req.params;
+   await Listing.findByIdAndUpdate(id,{...req.body.listing});
+   res.redirect(`/listings/${id}`);
+});
+
+//DELETE Route
+app.delete("/listing/:id",async(req,res)=>{
+    let {id} = req.params;
+    let deletedListing = await Listing.findByIdAndDelete(id);
+    console.log(deletedListing);
+    res.redirect("/listings");
 })
+
+
 
 // Test Listing
 // app.get("/testListing",async (req,res)=>{
@@ -43,7 +100,7 @@ app.get("/",(req,res) =>{
 //   res.send("successful testing");
 // });
 
-// app.listen(8080,() => {
-//     console.log("server is listening on port 8080");
-// });
+app.listen(8080,() => {
+    console.log("server is listening on port 8080");
+});
 
