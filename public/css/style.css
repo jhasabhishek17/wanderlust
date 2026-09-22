@@ -1,9 +1,18 @@
 /* In the public folder we will write all the styling codes */
 
-/* body{
-    background-color: pink;
-} */
+body{
+  font-family: "Plus Jakarta Sans", sans-serif !important;
+  font-optical-sizing: auto;
+  font-weight: 200-800;
+  font-style: normal;
+  display: flex;
+  flex-direction:column;
+  min-height: 100vh;
+}
 
+.container{
+    flex: 1;
+}
 /* Navbar */
 .navbar{
     height: 5rem;
@@ -51,4 +60,68 @@
     flex-wrap: wrap;
     justify-content: center;
     align-content: space-evenly;
+}
+
+/* Cards  */
+
+.card{
+    border: none !important;
+    margin-bottom: 2 rem;
+}
+
+.card-img-top{
+    border-radius: 1rem !important;
+    width: 100% o !important;
+    object-fit: cover !important;
+
+}
+
+.card-body{
+    padding: 0 !important;
+
+}
+
+.card-text p{
+    font-weight: 400 !important;
+    
+}
+
+.listing-link{
+    text-decoration: none;
+}
+
+/* Card Effect */
+.card-img-overlay{
+    opacity: 0;
+}
+
+.card-img-overlay:hover{
+    opacity: 0.2;
+}
+
+/* New Page */
+.add-btn{
+    background-color: #fe424d !important;
+    border: none !important;
+}
+
+/* Edit page */
+.edit-btn{
+    background-color: #fe424d !important;
+    border: none !important;
+}
+
+/* Show page */
+
+.show-img{
+    height: 30vh;
+}
+
+.btns{
+    display: flex;
+}
+
+.show-card{
+    padding: 0;
+    padding-right: 0;
 }
