@@ -7,13 +7,15 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
-  "author": "",
+  "author": "Abhishek Jha",
   "license": "ISC",
   "type": "commonjs",
   "dependencies": {
     "bootstrap": "^5.3.8",
+    "connect-flash": "^0.1.1",
     "ejs-mate": "^4.0.0",
     "express": "^5.2.1",
+    "express-session": "^1.19.0",
     "joi": "^18.2.9",
     "method-override": "^3.0.0",
     "mongoose": "^9.10.1"
