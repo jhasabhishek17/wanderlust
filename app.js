@@ -11,10 +11,13 @@ const {listingSchema,reviewSchema} = require("./schema.js");
 const Review = require("./models/review.js");
 const session = require("express-session");
 const flash = require("connect-flash");
+const passport = require("passport");
+const LocalStrategy = require("passport-local");
+const User = require("./models/user.js")
 
-const listings = require("./routes/listing.js");
-const reviews = require("./routes/review.js");
-
+const listingsRouter = require("./routes/listing.js");
+const reviewsRouter = require("./routes/review.js");
+const userRouter = require("./routes/user.js");
 //Connection code
 const MONGO_URL = "mongodb://127.0.0.1:27017/wanderlust";
 
@@ -53,23 +56,43 @@ const sessionOption ={
 app.use(session(sessionOption));
 app.use(flash()); // first we have to use the flash then only we can use the write the code
 
+app.use(passport.initialize());
+app.use(passport.session());
+
+passport.use(new LocalStrategy(User.authenticate()));
+
+passport.serializeUser(User.serializeUser()); // serializeuser means serialize user into the session  stores information related to user 
+passport.deserializeUser(User.deserializeUser());// deserializer user - to unstore the user information
+
 app.use((req, res, next) => {
     res.locals.success = req.flash("success");
-    res.locals.success = req.flash("error");
+    res.locals.error = req.flash("error");
     next();
 });
+
+app.get("/demouser",async(req,res) => {
+    let fakeUser = new User({
+        email: "student@gmail.com",
+        username: "hariom"
+    });
+    let registeredUser= await User.register(fakeUser,"Helloooo");
+    res.send(registeredUser);
+})
+
 
 app.get("/",(req,res) =>{
     res.send("Hi , I am Root");
 });
 
+
+
+
+
 //BASIC APIs
 
-
-
-
-app.use("/listings", listings);
-app.use("/listings/:id/reviews",reviews);
+app.use("/listings", listingsRouter);
+app.use("/listings/:id/reviews",reviewsRouter);
+app.use("/",userRouter);
 
 // "If the user requests a URL that none of my other routes handled, send a 404 error to the error-handling middleware."
 app.all("/*splat",(req,res,next) => {
