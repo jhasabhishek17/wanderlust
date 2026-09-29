@@ -19,6 +19,8 @@ async function main() {
     
 }
 
+// This function resets the listings collection, adds the owner ID to each initial listing,
+// inserts all the prepared listing data into MongoDB, and confirms that the data was initialized.
 const initDB = async() =>{
     await Listing.deleteMany({});
     initData = initData.data.map((obj)=> ({...obj,owner:"6abb6b424a388e19e54c9322"}));
