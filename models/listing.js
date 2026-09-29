@@ -1,4 +1,5 @@
 //In starting we have to require all the necessary things 
+// in models folder we have write the schema
 
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
@@ -34,7 +35,11 @@ const listingSchema = new Schema({
             type: Schema.Types.ObjectId,
             ref:"Review",
         }
-    ]
+    ],
+    owner: {
+        type: Schema.Types.ObjectId,
+        ref:"User",
+    }
 });
 
 listingSchema.post ("findOneAndDelete",async (listing) =>{
