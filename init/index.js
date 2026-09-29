@@ -1,7 +1,7 @@
 // In index.js file we write all the initialzation logic
 
 const mongoose = require("mongoose");
-const initData = require("./data.js");
+let initData = require("./data.js");
 const Listing = require("../models/listing.js");
 
 const MONGO_URL = "mongodb://127.0.0.1:27017/wanderlust";
@@ -21,9 +21,10 @@ async function main() {
 
 const initDB = async() =>{
     await Listing.deleteMany({});
-    await Listing.insertMany(initData.data);
+    initData = initData.data.map((obj)=> ({...obj,owner:"6abb6b424a388e19e54c9322"}));
+    await Listing.insertMany(initData);
     console.log("data was initialized");
-
+    initData
 }
 
 initDB();
