@@ -14,14 +14,8 @@ const listingSchema = new Schema({
     description: String,
 
     image: {
-        filename: {
-            type: String,
-            default: "listingimage"
-        },
-        url: {
-            type: String,
-            default: "https://unsplash.com/photos/person-cooking-eggs-on-a-stovetop-following-a-recipe-PAG-wzE6R7s"
-        }
+        url: String,
+        filename: String,
     },
 
     price: {
