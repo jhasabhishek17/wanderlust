@@ -1,3 +1,8 @@
+// we can not use our env file in our production phase we can use it only development phase whenever we upload to guthub we can't upload in github or etc
+if(process.env.NODE_ENV != "production"){
+    require('dotenv').config();
+}
+
 const express = require("express");
 const app = express();
 const mongoose = require("mongoose");
@@ -64,9 +69,12 @@ passport.use(new LocalStrategy(User.authenticate()));
 passport.serializeUser(User.serializeUser()); // serializeuser means serialize user into the session  stores information related to user 
 passport.deserializeUser(User.deserializeUser());// deserializer user - to unstore the user information
 
+
+// flash middleware
 app.use((req, res, next) => {
     res.locals.success = req.flash("success");
     res.locals.error = req.flash("error");
+    res.locals.curUser = req.user;
     next();
 });
 
