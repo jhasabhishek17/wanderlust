@@ -34,7 +34,7 @@ const listingSchema = new Schema({
         type: Schema.Types.ObjectId,
         ref:"User",
     },
-    geometry:{
+    geometry:{ // this is to get the geometry of the location we want to show on the map
          
     type: {
       type: String, // Don't do `{ location: { type: String } }`
