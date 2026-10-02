@@ -1,7 +1,7 @@
 // in controllers folder we are going to write all the callback code (controllers)
 
 const Listing = require("../models/listing");
-const mbxGeocoding = require('@mapbox/mapbox-sdk/services/tilesets');
+const mbxGeocoding = require('@mapbox/mapbox-sdk/services/geocoding');
 const mapToken = process.env.MAP_TOKEN;
 const geocodingClient = mbxGeocoding({ accessToken: mapToken});
 
@@ -20,20 +20,25 @@ module.exports.renderNewForm = (req,res) =>{
 
 module.exports.showListing = (async (req,res) =>{
     let {id} = req.params;
-    const listing = await Listing.findById(id).populate({path:"reviews",populate: {path: "author"},}).populate("owner");
+
+    const listing = await Listing.findById(id)
+        .populate({path:"reviews",populate: {path: "author"}})
+        .populate("owner");
+
     if(!listing) {
-        req.flash("error","Listening you requested for does not exist");
-        res.redirect("/listings");
+        req.flash("error","Listing you requested for does not exist");
+        return res.redirect("/listings");
     }
+
     console.log(listing);
     console.log("Reviews: ", listing.reviews);
-    res.render("listings/show.ejs",{listing});
 
+    res.render("listings/show.ejs",{listing,mapToken});
 });
 
 // below is the code for mapbox api to show the location of the listing on the map
 module.exports.createListing = async (req,res,next) =>{
-    let response  = await geocodingClient.fowardGeocode({
+    let response  = await geocodingClient.forwardGeocode({
          query: req.body.listing.location,// this is the location we want to show on the map
          limit : 1,
     }) 
