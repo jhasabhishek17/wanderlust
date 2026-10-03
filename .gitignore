@@ -1,2 +1,4 @@
 node_modules/
 .env
+.DS_Store 
+# the above line is for mac users to ignore the .DS_Store file which is created by mac os automatically in every folder DS Store file is used to store custom attributes of a folder such as the position of icons or the choice of a background image. It is created automatically by the Finder in every folder and is normally hidden from the user. The .DS_Store file is not needed for your project and should be ignored in version control systems like Git.
