@@ -37,6 +37,11 @@ module.exports.login = async(req,res) => {
     
 };
 
+module.exports.renderWishlist = async(req,res) =>{
+    await req.user.populate("wishlist");
+    res.render("users/wishlist.ejs",{wishlist:req.user.wishlist});
+};
+
 module.exports.logout = (req,res,next) =>{
     req.logout((err)=>{
         if(err){
