@@ -1,12 +1,12 @@
 <% layout("/layouts/boilerplate") %>
-
-<div class="row mt-3">
-    <div class="col-8 offset-2">
+<div class="row ">
+    <div class="col-8 offset-2 ">
         <br/><br/>
-        <h3>Create a New Listing</h3>
+        <h3 >Create a New Listing</h3>
     <form method="POST" action="/listings" enctype="multipart/form-data" novalidate class="needs-validation">
 
-        <div class="mb-3">
+        <div class="mb-3 mt-3">
+            <b>
             <label for="title" class="form-label">Title</label>
             <input 
                 name="listing[title]" 
@@ -14,38 +14,38 @@
                 type="text" 
                 class="form-control"
                 required
-            />
+            /></b>
             <div class="valid-feedback">Title looks good</div>
         </div>
 
-        <div class="mb-3">
+        <div class="mb-3"><b>
             <label for="description" class="form-label">Description</label>
             <textarea name="listing[description]" class="form-control" required></textarea>
-        </div>
+        </div></b>
 
-        <div class="mb-3">
-            <label for="image" class="form-label">Upload Listing Image</label>
+        <div class="mb-3"><b>
+            <label for="image" class="form-label">Upload Image</label>
             <input 
                 name="listing[image]" 
                 type="file" 
                 class="form-control"
-            />
+            /></b>
         </div>
 
         <div class="row">
 
-            <div class="mb-3 col-md-4">
+            <div class="mb-3 col-md-4"><b>
                 <label for="price" class="form-label">Price</label>
                 <input 
                     name="listing[price]" 
                     placeholder="8428782" 
                     class="form-control" 
                     required
-                />
+                /></b>
                 <div class="invalid-feedback">Please enter a valid price</div>
             </div>
 
-            <div class="mb-3 col-md-8">
+            <div class="mb-3 col-md-8"><b>
                 <label for="country" class="form-label">Country</label>
                 <input 
                     name="listing[country]" 
@@ -53,13 +53,13 @@
                     type="text" 
                     class="form-control" 
                     required
-                />
+                /></b>
                 <div class="invalid-feedback">Please enter a country</div>
             </div>
 
         </div>
 
-        <div class="mb-3">
+        <div class="mb-3"><b>
             <label for="location" class="form-label">Location</label>
             <input 
                 name="listing[location]" 
@@ -67,11 +67,32 @@
                 type="text" 
                 class="form-control" 
                 required
-            />
+            /></b>
             <div class="invalid-feedback">Please enter a location</div>
         </div>
 
-        <button class="btn btn-dark add-btn mt-3">Add</button>
+
+        <div class="mb-3"><b>
+            <label for="category" class="form-label">Category</label>
+            <select name="listing[category]" class="form-select" aria-label="Default select example" required>
+               <option selected>Choose category</option>
+               <option value="Trending">Trending</option>
+               <option value="Bed & Breakfast">Bed & Breakfast</option>
+               <option value="Iconic Cities">Iconic Cities</option>
+               <option value="Mountains">Mountains</option>
+               <option value="Castles">Castles</option>
+               <option value="Amazing Pools">Amazing Pools</option>
+               <option value="Campaign">Campaign</option>
+               <option value="Farms">Farms</option>
+               <option value="Arctic">Arctic</option>
+               <option value="Domes">Domes</option>
+               <option value="Boats">Boats</option>
+            </select>
+        </div></b>
+
+
+
+        <button class="btn btn-dark add-btn mt-2 mb-3">Add</button>
 
     </form>
 </div>
