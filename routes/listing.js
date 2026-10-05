@@ -11,6 +11,7 @@ const {storage} = require("../cloudConfig.js");
 const upload = multer({storage})
 
 // common route for both index and post 
+
 router 
  .route("/")
  .get(wrapAsync(listingController.index))
@@ -20,10 +21,9 @@ router
     wrapAsync (listingController.createListing)
  );
 
-
 //New Route
 router.get("/new",isloggedin,listingController.renderNewForm);
-
+router.post("/:id/wishlist",isloggedin,wrapAsync(listingController.toggleWishlist));
 
 router.route("/:id")
  .get(wrapAsync(listingController.showListing) )
@@ -32,19 +32,20 @@ router.route("/:id")
 
 //DELETE Route
 
-
 //Below code is to get the listing file (Index Route)
+
 //router.get("/",  wrapAsync(listingController.index)); // we add common route for both index and post route above 
 
-
 //Show Route
+
 //router.get("/:id",wrapAsync(listingController.showListing) );
 
-
-
 //Create Route
+
 // router.post("/",isloggedin,validateListing,
+
 //     wrapAsync (listingController.createListing)
+
 // );
 
 //Edit Route
@@ -52,10 +53,11 @@ router.get("/:id/edit",isloggedin,isOwner,wrapAsync(listingController.renderEdit
 );
 
 //Update Route
+
 //router.put("/:id",isloggedin,isOwner,validateListing,wrapAsync (listingController.updateListing));
 
 //DELETE Route
-//router.delete("/:id",isloggedin,isOwner,wrapAsync (listingController.destroyListing));
 
+//router.delete("/:id",isloggedin,isOwner,wrapAsync (listingController.destroyListing));
 
 module.exports = router;
