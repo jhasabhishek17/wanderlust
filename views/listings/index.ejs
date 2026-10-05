@@ -8,12 +8,14 @@
         align-items: center;
     }
 
-    .filter{
-        text-align: center;
-        margin-right: 2rem;
-        margin-top: 2rem;
-        opacity: 0.7;
-    }
+.filter{
+    text-align: center;
+    margin-right: 2rem;
+    margin-top: 2rem;
+    opacity: 0.7;
+    text-decoration: none;
+    color: inherit;
+}
 
     .filter:hover{
         opacity:1;
@@ -47,69 +49,70 @@
 
 <div id="filters">
 
-    <div class="filter">
+    <a href="/listings?category=Trending" class="filter">
         <div><i class="fa-solid fa-fire"></i></div>
         <p>Trending</p>
-    </div>
+    </a>
 
-    <div class="filter">
+    <a href="/listings?category=Bed%20%26%20Breakfast" class="filter">
         <div><i class="fa-sharp fa-solid fa-bed"></i></div>
         <p>Bed & Breakfast</p>
-    </div>
+    </a>
 
-    <div class="filter">
+    <a href="/listings?category=Iconic%20Cities" class="filter">
         <div><i class="fa-solid fa-mountain-city"></i></div>
         <p>Iconic Cities</p>
-    </div>
+    </a>
 
-    <div class="filter">
+    <a href="/listings?category=Mountains" class="filter">
         <div><i class="fa-solid fa-mountain-city"></i></div>
         <p>Mountains</p>
-    </div>
+    </a>
 
-    <div class="filter">
+    <a href="/listings?category=Castles" class="filter">
         <div><i class="fa-brands fa-fort-awesome"></i></div>
         <p>Castles</p>
-    </div>
+    </a>
 
-    <div class="filter">
+    <a href="/listings?category=Amazing%20Pools" class="filter">
         <div><i class="fa-solid fa-person-swimming"></i></div>
         <p>Amazing Pools</p>
-    </div>
+    </a>
 
-    <div class="filter">
+    <a href="/listings?category=Campaign" class="filter">
         <div><i class="fa-solid fa-person-hiking"></i></div>
         <p>Campaign</p>
-    </div>
+    </a>
 
-    <div class="filter">
+    <a href="/listings?category=Farms" class="filter">
         <div><i class="fa-solid fa-cow"></i></div>
         <p>Farms</p>
-    </div>
+    </a>
 
-    <div class="filter">
+    <a href="/listings?category=Arctic" class="filter">
         <div><i class="fa-solid fa-igloo"></i></div>
         <p>Arctic</p>
-    </div>
+    </a>
 
-    <div class="filter">
+    <a href="/listings?category=Domes" class="filter">
         <div><i class="fa-solid fa-igloo"></i></div>
         <p>Domes</p>
-    </div>
+    </a>
 
-    <div class="filter">
+    <a href="/listings?category=Boats" class="filter">
         <div><i class="fa-solid fa-sailboat"></i></div>
         <p>Boats</p>
-    </div>
+    </a>
 
-    <div class="tax-toggle">
-        <div class="form-check-reverse form-switch">
+    <div class="tax-toggle mb-3">
+        <div class="form-check-reverse form-switch ">
             <input class="form-check-input" type="checkbox" role="switch" id="switchCheckDefault">
             <label class="form-check-label" for="switchCheckDefault">Display Taxes and Fees</label>
         </div>
     </div>
 
 </div>
+
 
 <div class="row row-cols-lg-3 row-cols-md-2 row-cols-sm-1 mt-3">
 
@@ -121,12 +124,22 @@
         <img src="<%= listing.image.url %>" 
         class="card-img-top" 
         alt="listing_image" 
-        style="height: 20rem"
+        style="height: 14rem "
         />
 
-        <div class="card-img-overlay">abcd</div>
+        <div class="card-img-overlay"></div>
 
-        <div class="card-body">
+        <% if(curUser){ %>
+          <form action="/listings/<%= listing._id %>/wishlist" method="POST">
+             <button type="submit" class="wishlist-btn">
+                <i class="fa-regular fa-heart"></i>
+             </button>
+          </form>
+        <% } %>
+
+
+
+        <div class="card-body mb-2">
             <p class="card-text">
                 <b><%= listing.title %></b><br/>
                 <%= listing.price.toLocaleString("en-IN") %> /night
