@@ -35,22 +35,25 @@
     >
       <span class="navbar-toggler-icon"></span>
     </button>
-    <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+    <div class="collapse navbar-collapse" id="navbarNavAltMarkup"> 
+      <b>Wanderlust</b>
       <div class="navbar-nav">
-        <a class="nav-link" href="/listings">Explore</a>
+        <a class="nav-link" href="/listings"><i class="fa-solid fa-house-chimney"></i></a>
       </div>
-      <div class="navbar-nav ms-auto">
-        <form class="d-flex" role="search">
-      <input class="form-control me-2 search-inp" type="search" placeholder="Search-destination"/>
-      <button class=" btn search-btn" type="submit">
-        <i class="fa-solid fa-magnifying-glass"></i>Search
-      </button>
+<div class="navbar-nav mx-auto">
+    <form class="d-flex search-form" role="search" action="/listings" method="GET">
+        <input class="form-control sbar" type="search" name="search" placeholder="Find Your Stay" aria-label="Search">
+        <button class="btn btn-search ms-2" type="submit">
+            <i class="fa-solid fa-magnifying-glass"></i> Search
+        </button>
     </form>
-      </div >
+</div>    
+      <br>
 
 
 <div class="navbar-nav ms-auto">
-    <a class="nav-link" href="/listings/new">Airbnb Your Home</a>
+    <a class="nav-link" href="/listings/new">Add Your Stay</a>
+    <a class="nav-link" href="/wishlist"><i class="fa-regular fa-heart"></i> Wishlist</a>
     <% if(!curUser) { %>
         <a class="nav-link" href="/signup"><b>Signup</b></a>
         <a class="nav-link" href="/login"><b>Login</b></a>
