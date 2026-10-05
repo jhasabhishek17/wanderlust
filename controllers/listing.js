@@ -8,7 +8,32 @@ const geocodingClient = mbxGeocoding({ accessToken: mapToken});
 
 
 module.exports.index = async (req,res)=>{
-   const allListings = await  Listing.find({});
+   let {search,category} = req.query;
+   let allListings;
+
+   if(search && category){
+      allListings = await Listing.find({
+         category: category,
+         $or: [
+            {title: {$regex: search, $options: "i"}},
+            {location: {$regex: search, $options: "i"}},
+            {country: {$regex: search, $options: "i"}}
+         ]
+      });
+   } else if(search){
+      allListings = await Listing.find({
+         $or: [
+            {title: {$regex: search, $options: "i"}},
+            {location: {$regex: search, $options: "i"}},
+            {country: {$regex: search, $options: "i"}}
+         ]
+      });
+   } else if(category){
+      allListings = await Listing.find({category: category});
+   } else {
+      allListings = await Listing.find({});
+   }
+
    res.render("listings/index.ejs",{allListings});
 };
 
@@ -93,4 +118,20 @@ module.exports.destroyListing = async(req,res)=>{
     console.log(deletedListing);
     req.flash("success", "Listing Deleted");
     res.redirect("/listings");
+};
+
+module.exports.toggleWishlist = async(req,res)=>{
+    let {id} = req.params;
+    let index = req.user.wishlist.findIndex(item => item.toString() === id);
+
+    if(index === -1){
+        req.user.wishlist.push(id);
+        req.flash("success","Added to wishlist");
+    } else {
+        req.user.wishlist.splice(index,1);
+        req.flash("success","Removed from wishlist");
+    }
+
+    await req.user.save();
+    res.redirect(`/listings/${id}`);
 };
