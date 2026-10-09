@@ -6,11 +6,15 @@ const passport = require("passport");
 const {savedRedirectUrl,isloggedin} = require("../middleware.js");
 const userController = require("../controllers/users.js");
 const { renderLoginForm, logout } = require("../controllers/users.js");
+const multer = require("multer");
+const {storage} = require("../cloudConfig.js");
+const upload = multer({storage});
 
 router
     .route("/signup")
     .get(userController.renderSignupForm)
-    .post(wrapAsync(userController.signup))
+    // .post(wrapAsync(userController.signup))
+    .post(upload.single("profileImage"),wrapAsync(userController.signup)) // this line help us to to upload the profile image 
 
 
     router
@@ -36,6 +40,7 @@ router
 //   userController.login
 // );
 
+// router.get("/profile",isloggedin,wrapAsync(userController.renderProfile));
 
 router.get("/wishlist",isloggedin,wrapAsync(userController.renderWishlist));
 
