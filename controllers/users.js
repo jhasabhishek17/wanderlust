@@ -8,7 +8,15 @@ module.exports.renderSignupForm = (req,res)=>{
 module.exports.signup = async(req,res) => {
     try{
     let {username,email,password} = req.body;
-    const newUser = new User({email,username});
+    // const newUser = new User({email,username});
+    const newUser = new User({
+    email,
+    username,
+    profileImage: req.file ? {
+        url: req.file.path,
+        filename: req.file.filename
+    } : undefined
+});
     const registeredUser = await User.register(newUser,password);
     req.login(registeredUser,(err)=>{
         if(err){
@@ -36,6 +44,10 @@ module.exports.login = async(req,res) => {
     res.redirect(redirectUrl);
     
 };
+
+// module.exports.renderProfile = async(req,res) =>{
+//     res.render("users/profile.ejs",{user:req.user});
+// };
 
 module.exports.renderWishlist = async(req,res) =>{
     await req.user.populate("wishlist");
