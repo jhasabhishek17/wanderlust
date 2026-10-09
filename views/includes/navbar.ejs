@@ -40,29 +40,106 @@
       <div class="navbar-nav">
         <a class="nav-link" href="/listings"><i class="fa-solid fa-house-chimney"></i></a>
       </div>
-<div class="navbar-nav mx-auto">
-    <form class="d-flex search-form" role="search" action="/listings" method="GET">
-        <input class="form-control sbar" type="search" name="search" placeholder="Find Your Stay" aria-label="Search">
-        <button class="btn btn-search ms-2" type="submit">
-            <i class="fa-solid fa-magnifying-glass"></i> Search
-        </button>
-    </form>
-</div>    
+
+      <div class="navbar-nav mx-auto">
+        <form class="d-flex search-form" role="search" action="/listings" method="GET">
+            <input class="form-control sbar" type="search" name="search" placeholder="Find Your Stay" aria-label="Search">
+            <button class="btn btn-search ms-2" type="submit">
+                <i class="fa-solid fa-magnifying-glass"></i> Search
+            </button>
+        </form>
+      </div>    
+
       <br>
 
+      <div class="navbar-nav ms-auto align-items-center">
+        <a class="nav-link" href="/listings/new">Add Your Stay</a>
+        <a class="nav-link" href="/wishlist"><i class="fa-regular fa-heart"></i> Wishlist</a>
 
-<div class="navbar-nav ms-auto">
-    <a class="nav-link" href="/listings/new">Add Your Stay</a>
-    <a class="nav-link" href="/wishlist"><i class="fa-regular fa-heart"></i> Wishlist</a>
-    <% if(!curUser) { %>
-        <a class="nav-link" href="/signup"><b>Signup</b></a>
-        <a class="nav-link" href="/login"><b>Login</b></a>
-    <% } %>
+        <% if(!curUser) { %>
+            <a class="nav-link" href="/signup"><b>Signup</b></a>
+            <a class="nav-link" href="/login"><b>Login</b></a>
+        <% } %>
 
-    <% if(curUser) { %>
-        <a class="nav-link" href="/logout"><b>Logout</b></a>
-    <% } %>
-</div>
+        <!-- Shows the logged-in user's profile picture and username with a dropdown for wishlist and logout -->
+        <% if(curUser) { %>
+
+            <div class="dropdown d-flex align-items-center">
+
+                <a 
+                    class="profile-nav" 
+                    href="#" 
+                    role="button" 
+                    data-bs-toggle="dropdown" 
+                    aria-expanded="false"
+                >
+                    <div class="profile-nav-image">
+
+                        <% if(curUser.profileImage && curUser.profileImage.url) { %>
+                            <img 
+                                src="<%= curUser.profileImage.url %>" 
+                                alt="profile"
+                            >
+                        <% } else { %>
+                            <i class="fa-solid fa-user"></i>
+                        <% } %>
+
+                    </div>
+
+                    <span class="profile-name">
+                        <%= curUser.username %> <i class="fa-solid fa-chevron-down"></i>
+                    </span>
+                </a>
+
+                <!-- Profile and account options -->
+                <ul class="dropdown-menu dropdown-menu-end">
+                    <li>
+                        <a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#profileModal">👤 Profile</a>
+                    </li>
+                    <li>
+                        <a class="dropdown-item" href="/wishlist">❤️ Wishlist</a>
+                    </li>
+                    <li>
+                        <a class="dropdown-item" href="/logout">🚪 Logout</a>
+                    </li>
+                </ul>
+
+            </div>
+
+        <% } %>
+      </div>
     </div>
   </div>
 </nav>
+
+<% if(curUser) { %>
+
+<!-- Profile popup -->
+<div class="modal fade" id="profileModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-sm">
+        <div class="modal-content">
+
+            <button type="button" class="btn-close profile-close" data-bs-dismiss="modal" aria-label="Close"></button>
+
+            <div class="modal-body text-center p-4">
+
+                <div class="profile-image mx-auto mb-3">
+                    <% if(curUser.profileImage && curUser.profileImage.url) { %>
+                        <img src="<%= curUser.profileImage.url %>" alt="profile">
+                    <% } else { %>
+                        <i class="fa-solid fa-user"></i>
+                    <% } %>
+                </div>
+
+                <h5 class="mb-1"><%= curUser.username %></h5>
+                <p class="text-muted mb-3"><%= curUser.email %></p>
+
+                <a href="/wishlist" class="btn btn-dark btn-sm">❤️ My Wishlist</a>
+
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<% } %>
