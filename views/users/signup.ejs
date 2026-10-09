@@ -1,39 +1,82 @@
+
 <% layout("/layouts/boilerplate") %>
 
-<div class="row mt-3">
-    <h1 class="col-6 offset-3">Signup on wanderlust</h1>
-    <div class="col-8 offset-2">
-        <form action ="/signup" method="POST" class="needs-validation" novalidate>
+<div class="signup-container">
+    <div class="signup-card">
+
+        <h1>Signup on Wanderlust</h1>
+
+        <form action="/signup" method="POST" enctype="multipart/form-data" class="needs-validation" novalidate>
+
+            <div class="profile-upload-container">
+                <label for="profileImage" class="profile-upload">
+                    <div class="profile-circle">
+                        <i class="fa-solid fa-camera"></i>
+                    </div>
+                    <p>Upload Profile Photo</p>
+                </label>
+
+                <input 
+                    name="profileImage" 
+                    id="profileImage"
+                    type="file"
+                    accept="image/png,image/jpeg"
+                    hidden
+                />
+            </div>
+
             <div class="mb-3">
-        <label for="username" class="form-label">Username</label>
-        <input 
-            name ="username" 
-            id ="username"
-            type="text" 
-            class="form-control"
-            required
-        />
-        <div class="valid-feedaback">Looks good</div>
-         <div class="mb-3">
-        <label for="email" class="form-label">Email</label>
-        <input 
-            name ="email" 
-            id ="email"
-            type="email" 
-            class="form-control"
-            required
-        />
-         <div class="mb-3">
-        <label for="password" class="form-label">Password</label>
-        <input 
-            name ="password" 
-            id ="password"
-            type="password" 
-            class="form-control"
-            required
-        />
-        </div>
-        <button class="btn-btn-success">Signup</button>
+                <label for="username" class="form-label">Username</label>
+                <input 
+                    name="username" 
+                    id="username"
+                    type="text" 
+                    class="form-control"
+                    required
+                />
+                <div class="valid-feedaback"></div>
+            </div>
+
+            <div class="mb-3">
+                <label for="email" class="form-label">Email</label>
+                <input 
+                    name="email" 
+                    id="email"
+                    type="email" 
+                    class="form-control"
+                    required
+                />
+            </div>
+
+            <div class="mb-3">
+                <label for="password" class="form-label">Password</label>
+                <input 
+                    name="password" 
+                    id="password"
+                    type="password" 
+                    class="form-control"
+                    required
+                />
+            </div>
+
+            <button class="btn btn-success signup-btn">Signup</button>
+
         </form>
+
     </div>
 </div>
+
+<script>
+    let profileImage = document.getElementById("profileImage");
+    let profileCircle = document.querySelector(".profile-circle");
+
+    profileImage.addEventListener("change", function() {
+        let file = profileImage.files[0];
+
+        if(file) {
+            let imageUrl = URL.createObjectURL(file);
+            profileCircle.innerHTML = `<img src="${imageUrl}" style="width:100%;height:100%;object-fit:cover;">`;
+        }
+    });
+</script>
+
